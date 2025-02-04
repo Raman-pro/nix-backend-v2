@@ -4,7 +4,7 @@ import sharp, { FitEnum } from "sharp";
 import util from "util";
 import CustomError from "../../config/CustomError";
 import asyncErrorHandler from "../helpers/asyncErrorHandler";
-import StatusCode from "../helpers/httpStatusCode";
+import StatusCode from "static/types/backend/httpStatusCode";
 import {
   DeleteImageOptions,
   GenerateThumbnailOptions,
@@ -107,7 +107,7 @@ const generate_thumbnail = async (
     .resize(dimension, dimension, { fit: fit })
     .toBuffer();
 
-  writeFile(`thumbnails/${filename}_${dimension}`, thumbnail)
+  writeFile(`thumbnails/${filename}_${dimension}`, new Uint8Array(thumbnail))
     .then(() => {
       if (image_type !== ImageType.Avatar)
         console.log(

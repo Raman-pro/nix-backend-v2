@@ -11,6 +11,15 @@
             "./src/types",
             "./node_modules/@types"
         ],
+        "baseUrl": "./",
+        "paths": {
+            "@/*": [
+                "src/*"
+            ], // Adjust based on your project structure
+            "static/*": [
+                "src/commonlib/*"
+            ]
+        },
         "resolveJsonModule": true
     },
     "exclude": [

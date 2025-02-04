@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import CustomError from "../../config/CustomError";
 import asyncErrorHandler from "../helpers/asyncErrorHandler";
-import StatusCode from "../helpers/httpStatusCode";
+import StatusCode from "static/types/backend/httpStatusCode";
 import { Edition, EditionStatus } from "../models/editionModel";
 
 /**

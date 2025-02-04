@@ -6,7 +6,7 @@ import {
   get_all_roles,
 } from "../controllers/roleController";
 import protected_route from "../middlewares/permsMiddlewareInit";
-import Permission from "../helpers/permissions";
+import Permission from "static/types/permissions";
 import never_modify_these_roles from "../middlewares/roleMiddleware";
 
 const router = express.Router();

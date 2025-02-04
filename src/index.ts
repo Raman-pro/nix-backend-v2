@@ -6,7 +6,7 @@ import "dotenv/config";
 import express from "express";
 import morgan from "morgan";
 import globalErrorHandler from "./api/helpers/globalErrorHandler";
-import StatusCode from "./api/helpers/httpStatusCode";
+import StatusCode from "static/types/backend/httpStatusCode";
 import router from "./api/routes";
 import CustomError from "./config/CustomError";
 import connectDB from "./config/DatabaseConfig";

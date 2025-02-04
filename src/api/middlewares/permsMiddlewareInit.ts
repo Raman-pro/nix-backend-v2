@@ -1,8 +1,8 @@
 import CustomError from "../../config/CustomError";
 import { assertProtectedUser } from "../helpers/assertions";
 import asyncErrorHandler from "../helpers/asyncErrorHandler";
-import StatusCode from "../helpers/httpStatusCode";
-import Permission from "../helpers/permissions";
+import StatusCode from "static/types/backend/httpStatusCode";
+import Permission from "static/types/permissions";
 import * as UserService from "../services/userService";
 
 /**

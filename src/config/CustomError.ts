@@ -1,7 +1,7 @@
 //extend native Error object , according to our need, whenever need to create a error , use this CustomError
 
 import { MongoServerError } from "mongodb";
-import StatusCode from "../api/helpers/httpStatusCode";
+import StatusCode from "static/types/backend/httpStatusCode";
 
 class CustomError extends Error {
   statusCode: StatusCode;
