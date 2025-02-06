@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "module": "NodeNext",
-        "moduleResolution": "NodeNext",
+        "moduleResolution": "nodenext",
         "target": "ESNext",
         "sourceMap": false,
         "outDir": "dist",
@@ -11,16 +11,21 @@
             "./src/types",
             "./node_modules/@types"
         ],
-        "baseUrl": "./",
-        "paths": {
+        "baseUrl": ".",
+        "paths": { // Adjust based on your project structure
             "@/*": [
-                "src/*"
-            ], // Adjust based on your project structure
-            "static/*": [
-                "src/commonlib/*"
+                "./src/*"
+            ],
+            "@static/*": [
+                "./src/commonlib/*"
             ]
         },
         "resolveJsonModule": true
+    },
+    "ts-node": {
+        "require": [
+            "tsconfig-paths/register"
+        ]
     },
     "exclude": [
         "node_modules",

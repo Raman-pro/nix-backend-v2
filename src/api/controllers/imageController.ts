@@ -4,7 +4,7 @@ import sharp, { FitEnum } from "sharp";
 import util from "util";
 import CustomError from "../../config/CustomError";
 import asyncErrorHandler from "../helpers/asyncErrorHandler";
-import StatusCode from "static/types/backend/httpStatusCode";
+import StatusCode from "@static/types/backend/httpStatusCode";
 import {
   DeleteImageOptions,
   GenerateThumbnailOptions,

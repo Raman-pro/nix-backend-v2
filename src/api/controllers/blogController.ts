@@ -4,7 +4,7 @@ import CustomError from "../../config/CustomError";
 import { assertProtectedUser } from "../helpers/assertions";
 import asyncErrorHandler from "../helpers/asyncErrorHandler";
 import { blogForApprovalMail, blogPublishedMail } from "../helpers/emailHelper";
-import StatusCode from "static/types/backend/httpStatusCode";
+import StatusCode from "@static/types/backend/httpStatusCode";
 import { Blog, BlogStatus, IBlog } from "../models/blogModel";
 import { IUser } from "../models/userModel";
 

@@ -3,7 +3,7 @@ import { IBlog } from "../models/blogModel";
 import { User } from "../models/userModel";
 import PendingApprovalMail from "../services/emails/pendingApproval";
 import * as UserService from "../services/userService";
-import Permission from "static/types/permissions";
+import Permission from "@static/types/permissions";
 import StoryPublishedMail from "../services/emails/storyPublished";
 
 type ObjectId = mongoose.Types.ObjectId;

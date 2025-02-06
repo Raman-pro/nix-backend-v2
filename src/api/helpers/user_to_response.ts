@@ -1,6 +1,6 @@
 import { PopulatedUser } from "../models/userModel";
-import {MainWebsiteRole} from "static/types/mainWebsiteRole";
-import Permission from "static/types/permissions";
+import {MainWebsiteRole} from "@static/types/mainWebsiteRole";
+import Permission from "@static/types/permissions";
 
 interface UserResponse {
   permission: Permission[];

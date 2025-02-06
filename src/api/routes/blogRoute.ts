@@ -17,7 +17,7 @@ import {
   updateBlogController,
   updateDraftController,
 } from "../controllers/blogController";
-import Permission from "static/types/permissions";
+import Permission from "@static/types/permissions";
 import { protect } from "../middlewares/authMiddleware";
 import protected_route from "../middlewares/permsMiddlewareInit";
 

@@ -1,7 +1,7 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
 import asyncErrorHandler from "../helpers/asyncErrorHandler";
 import CustomError from "../../config/CustomError";
-import StatusCode from "static/types/backend/httpStatusCode";
+import StatusCode from "@static/types/backend/httpStatusCode";
 import mongoose from "mongoose";
 
 export const protect = asyncErrorHandler(async (req, res, next) => {

@@ -8,7 +8,7 @@ import {
   logout,
 } from "../controllers/authController";
 import protected_route from "../middlewares/permsMiddlewareInit";
-import Permission from "static/types/permissions";
+import Permission from "@static/types/permissions";
 import { protect } from "../middlewares/authMiddleware";
 
 const router = express.Router();

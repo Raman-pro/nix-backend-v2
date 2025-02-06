@@ -7,7 +7,7 @@ import {
   upsertEdition,
   getEdition,
 } from "../controllers/editionController";
-import Permission from "static/types/permissions";
+import Permission from "@static/types/permissions";
 import { protect } from "../middlewares/authMiddleware";
 import protected_route from "../middlewares/permsMiddlewareInit";
 

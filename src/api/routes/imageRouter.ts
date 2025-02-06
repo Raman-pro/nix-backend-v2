@@ -7,7 +7,7 @@ import {
   update_image,
   upload_image,
 } from "../controllers/imageController";
-import Permission from "static/types/permissions";
+import Permission from "@static/types/permissions";
 import { protect } from "../middlewares/authMiddleware";
 import {
   avatarStorage,

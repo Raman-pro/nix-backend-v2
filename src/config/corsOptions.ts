@@ -1,5 +1,5 @@
 import { CorsOptions } from "cors";
-import StatusCode from "static/types/backend/httpStatusCode";
+import StatusCode from "@static/types/backend/httpStatusCode";
 import CustomError from "./CustomError";
 
 const allowedOrigins = new Set<string>([

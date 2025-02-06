@@ -1,7 +1,7 @@
 import express from "express";
 import { protect } from "../middlewares/authMiddleware";
 import { get_totp } from "../controllers/totpController";
-import Permission from "static/types/permissions";
+import Permission from "@static/types/permissions";
 import protected_route from "../middlewares/permsMiddlewareInit";
 
 const router = express.Router();
