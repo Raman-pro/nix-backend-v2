@@ -267,7 +267,7 @@ export const get_image = asyncErrorHandler(async (req, res, next) => {
     // not empty string and not undefined
     const img_buff = await get_thumbnail({
       og_filename: filename,
-      image_type: (req.body.image_type as ImageType) || ImageType.General,
+      image_type: (req.body?.image_type as ImageType) || ImageType.General,
       thumbnail_type: thumbnail.toString(),
     });
     return res.contentType("png").send(img_buff);
