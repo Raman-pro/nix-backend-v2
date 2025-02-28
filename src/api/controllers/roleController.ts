@@ -1,8 +1,8 @@
 import CustomError from "../../config/CustomError";
 import asyncErrorHandler from "../helpers/asyncErrorHandler";
-import StatusCode from "../helpers/httpStatusCode";
+import StatusCode from "@static/types/backend/httpStatusCode";
 import { Role } from "../models/rolesModel";
-import Permission from "../helpers/permissions";
+import Permission from "@static/types/permissions";
 import { User } from "../models/userModel";
 
 /**

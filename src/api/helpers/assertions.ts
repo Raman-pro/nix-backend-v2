@@ -2,7 +2,7 @@ import { Response } from "express";
 import mongoose from "mongoose";
 import CustomError from "../../config/CustomError";
 import { PopulatedUser } from "../models/userModel";
-import StatusCode from "./httpStatusCode";
+import StatusCode from "@static/types/backend/httpStatusCode";
 
 export interface AssertOptions {
   throws?: boolean;

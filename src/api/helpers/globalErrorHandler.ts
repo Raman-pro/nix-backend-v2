@@ -4,7 +4,7 @@
 import { NextFunction, Request, Response } from "express";
 import CustomError from "../../config/CustomError";
 import { CastError, Error } from "mongoose";
-import StatusCode from "./httpStatusCode";
+import StatusCode from "@static/types/backend/httpStatusCode";
 
 const devErrors = (res: Response, error: CustomError) => {
   console.error(error);

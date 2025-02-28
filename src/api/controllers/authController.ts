@@ -3,7 +3,7 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import CustomError from "../../config/CustomError";
 import asyncErrorHandler from "../helpers/asyncErrorHandler";
 import { makeAccessToken, makeRefreshToken } from "../helpers/common";
-import StatusCode from "../helpers/httpStatusCode";
+import StatusCode from "@static/types/backend/httpStatusCode";
 import { user_to_response } from "../helpers/user_to_response";
 import { User } from "../models/userModel";
 import PasswordResetMail from "../services/emails/passwordReset";

@@ -1,6 +1,6 @@
 import CustomError from "../../config/CustomError";
 import asyncErrorHandler from "../helpers/asyncErrorHandler";
-import StatusCode from "../helpers/httpStatusCode";
+import StatusCode from "@static/types/backend/httpStatusCode";
 import { Event, IEvent } from "../models/eventModel";
 
 export const getEventsController = asyncErrorHandler(async (req, res, next) => {

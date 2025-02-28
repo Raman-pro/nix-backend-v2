@@ -1,6 +1,6 @@
 import multer from "multer";
 import CustomError from "../../config/CustomError";
-import StatusCode from "../helpers/httpStatusCode";
+import StatusCode from "@static/types/backend/httpStatusCode";
 
 export enum ImageType {
   General,

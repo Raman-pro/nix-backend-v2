@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import Permission from "../helpers/permissions";
+import Permission from "@static/types/permissions";
 
 export interface IRole {
   name: string;

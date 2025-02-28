@@ -2,7 +2,7 @@ import mongoose, { FilterQuery } from "mongoose";
 import { IRole } from "../models/rolesModel";
 import { IUser, PopulatedUser, User } from "../models/userModel";
 import bcrypt from "bcrypt";
-import generateRandomPassword from "../helpers/randomPassword";
+import generateRandomPassword from "@static/types/backend/randomPassword";
 import RegisterationMail from "./emails/registeration";
 import { HydratedDocument } from "mongoose";
 

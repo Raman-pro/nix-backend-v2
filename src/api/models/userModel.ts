@@ -1,6 +1,6 @@
 import mongoose, { HydratedDocument, Schema, Types } from "mongoose";
-import MainWebsiteRole from "../helpers/mainWebsiteRole";
-import Permission from "../helpers/permissions";
+import {MainWebsiteRole} from "@static/types/mainWebsiteRole";
+import Permission from "@static/types/permissions";
 import { IRole } from "./rolesModel";
 
 export interface IUser {

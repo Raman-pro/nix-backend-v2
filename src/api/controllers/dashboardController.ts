@@ -1,6 +1,6 @@
 import asyncErrorHandler from "../helpers/asyncErrorHandler";
 import { Blog, BlogStatus } from "../models/blogModel";
-import StatusCode from "../helpers/httpStatusCode";
+import StatusCode from "@static/types/backend/httpStatusCode";
 import CustomError from "../../config/CustomError";
 
 /**

@@ -8,7 +8,7 @@ import {
   createEventController,
 } from "../controllers/eventController";
 import { protect } from "../middlewares/authMiddleware";
-import Permission from "../helpers/permissions";
+import Permission from "@static/types/permissions";
 import protected_route from "../middlewares/permsMiddlewareInit";
 
 const router = express.Router();

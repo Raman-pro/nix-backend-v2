@@ -1,6 +1,6 @@
 import { TOTP } from "totp-generator";
 import asyncErrorHandler from "../helpers/asyncErrorHandler";
-import StatusCode from "../helpers/httpStatusCode";
+import StatusCode from "@static/types/backend/httpStatusCode";
 import CustomError from "../../config/CustomError";
 
 export const get_totp = asyncErrorHandler(async (_req, res, _next) => {

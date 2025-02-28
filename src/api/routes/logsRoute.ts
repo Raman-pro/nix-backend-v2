@@ -1,6 +1,6 @@
 import express from "express";
 import protected_route from "../middlewares/permsMiddlewareInit";
-import Permission from "../helpers/permissions";
+import Permission from "@static/types/permissions";
 import { clear_logs, get_logs } from "../middlewares/logsMiddleware";
 import { protect } from "../middlewares/authMiddleware";
 

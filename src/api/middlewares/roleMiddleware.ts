@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import CustomError from "../../config/CustomError";
-import StatusCode from "../helpers/httpStatusCode";
+import StatusCode from "@static/types/backend/httpStatusCode";
 
 /** This protects any modification/deletion to the default role and superuser role */
 const never_modify_these_roles = (
