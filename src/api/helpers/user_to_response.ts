@@ -1,5 +1,5 @@
 import { PopulatedUser } from "../models/userModel";
-import {MainWebsiteRole} from "@static/types/mainWebsiteRole";
+import { MainWebsiteRole } from "@static/types/mainWebsiteRole";
 import Permission from "@static/types/permissions";
 
 interface UserResponse {

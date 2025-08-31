@@ -19,7 +19,9 @@ router.route("/").get(protect, getEventsController);
 router
   .route("/create-event")
   .post(protect, createUpdateProtect, createEventController);
-router.route("/create-events").post(protect, createUpdateProtect, createEventsController)
+router
+  .route("/create-events")
+  .post(protect, createUpdateProtect, createEventsController);
 router
   .route("/update-event/:id")
   .post(protect, createUpdateProtect, updateEventController);

@@ -3,15 +3,17 @@ import asyncErrorHandler from "../helpers/asyncErrorHandler";
 import StatusCode from "@static/types/backend/httpStatusCode";
 import { Event, IEvent } from "../models/eventModel";
 
-export const getEventsController = asyncErrorHandler(async (req, res, next) => {
-  const events = await Event.find().sort();
+export const getEventsController = asyncErrorHandler(
+  async (req, res, next) => {
+    const events = await Event.find().sort();
 
-  res.status(StatusCode.OK).json({
-    status: "success",
-    message: "Events fetched successfully",
-    data: events,
-  });
-});
+    res.status(StatusCode.OK).json({
+      status: "success",
+      message: "Events fetched successfully",
+      data: events,
+    });
+  },
+);
 
 export const createEventController = asyncErrorHandler(
   async (req, res, next) => {
@@ -63,31 +65,31 @@ export const createEventController = asyncErrorHandler(
 
 export const createEventsController = asyncErrorHandler(
   async (req, res, next) => {
-    const {events} = req.body;
+    const { events } = req.body;
 
     if (!Array.isArray(events) || events.length === 0) {
       const error = new CustomError(
         "No events provided. Please provide an array of events.",
-        StatusCode.BAD_REQUEST
+        StatusCode.BAD_REQUEST,
       );
       return next(error);
     }
 
     const createdEvents: IEvent[] = [];
-    const errors: {event: IEvent, error: string}[] = [];
+    const errors: { event: IEvent; error: string }[] = [];
 
     for (const event of events) {
-      const {title, allDay, start, end, description, society} = event;
+      const { title, allDay, start, end, description, society } = event;
 
       const requiredFields = ["title", "allDay", "start"];
       const missingFields = requiredFields.filter(
-        (field) => event[field] == undefined || event[field] == null
+        (field) => event[field] == undefined || event[field] == null,
       );
 
       if (missingFields.length > 0) {
         errors.push({
-            event: event,
-            error: `Missing fields: ${missingFields.join(', ')}`,
+          event: event,
+          error: `Missing fields: ${missingFields.join(", ")}`,
         });
         continue;
       }
@@ -135,9 +137,8 @@ export const createEventsController = asyncErrorHandler(
       message: "All events created successfully",
       createdEvents,
     });
-  }
+  },
 );
-
 
 export const updateEventController = asyncErrorHandler(
   async (req, res, next) => {
