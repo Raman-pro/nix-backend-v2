@@ -348,46 +348,49 @@ export const changePassword = asyncErrorHandler(async (req, res, next) => {
 export const forgotPassword = asyncErrorHandler(async (req, res, next) => {
   const refresh_secret_key = process.env.REFRESH_SECRET_KEY;
   if (!refresh_secret_key) {
-    throw Error("Refresh/Reset secret key not found in env");
-  }
-
-  //get user based on post email from database
-  const email: string = req.body.email;
-  const user = await UserService.checkUserExists({ email: email });
-  if (!user) {
-    const error = new CustomError(
-      "No user exists with this email.",
-      StatusCode.NOT_FOUND,
+    return next(
+      new CustomError(
+        "Refresh/Reset secret key not found in env",
+        StatusCode.INTERNAL_SERVER_ERROR,
+      ),
     );
-    return next(error);
   }
 
-  console.log(`Forgot password intitiated for ${email}`);
-  //generate random reset token to send to user
+  // Get user based on post email from database
+  const email: string = req.body.email;
+  const user = await UserService.checkUserExists({ email });
+  if (!user) {
+    return next(
+      new CustomError("No user exists with this email.", StatusCode.NOT_FOUND),
+    );
+  }
+
+  console.log(`Forgot password initiated for ${email}`);
+  // Generate random reset token to send to user
   const resetToken = jwt.sign({ email: user.email }, refresh_secret_key, {
     expiresIn: "10m",
   });
-
   user.passwordResetToken = resetToken;
-
   await user.save();
   console.log("Password reset token added to db", user);
 
   const mail = new PasswordResetMail(user);
+  const emailResponse = await mail.sendTo(email);
 
-  try {
-    await mail.sendTo(email);
+  if (emailResponse) {
     console.log("Password reset email sent");
-    res.status(StatusCode.OK).json({
+    return res.status(StatusCode.OK).json({
       status: "success",
       message: "Password reset link successfully sent.",
     });
-  } catch (err) {
-    const error = new CustomError(
-      "There was an error in sending password reset email. Please try again.",
-      StatusCode.INTERNAL_SERVER_ERROR,
+  } else {
+    console.error("Password reset email could not be delivered");
+    return next(
+      new CustomError(
+        "Password reset email could not be delivered. Please try again later.",
+        StatusCode.INTERNAL_SERVER_ERROR,
+      ),
     );
-    return next(error);
   }
 });
 

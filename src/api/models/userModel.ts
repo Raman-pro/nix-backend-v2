@@ -1,5 +1,5 @@
 import mongoose, { HydratedDocument, Schema, Types } from "mongoose";
-import {MainWebsiteRole} from "@static/types/mainWebsiteRole";
+import { MainWebsiteRole } from "@static/types/mainWebsiteRole";
 import Permission from "@static/types/permissions";
 import { IRole } from "./rolesModel";
 
