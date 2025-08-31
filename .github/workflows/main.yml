@@ -28,4 +28,4 @@ jobs:
       # restart the application.
       - name: 4. Restart Application with PM2
         working-directory: /home/dvishal485/TeamPortal/nix-backend
-        run: pm2 restart nix-shell-env
+        run: sudo -H -u root pm2 restart nix-shell-env
