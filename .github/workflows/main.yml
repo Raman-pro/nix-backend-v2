@@ -1,4 +1,5 @@
-name: Deploy
+# This is a basic workflow to help you get started with Actions
+name: Deploy on push
 
 # Controls when the workflow will run
 on:
@@ -26,16 +27,16 @@ jobs:
       - name: Get to work dir
         run: cd $GITHUB_WORKSPACE
 
-      # Fix permissions for the target directory before rsync
-      - name: Ensure target directory exists with correct permissions
+      # Ensure target directory exists (ownership already fixed)
+      - name: Ensure target directory exists
         run: |
           mkdir -p /home/dvishal485/TeamPortal/nix-backend
-          sudo chown -R $USER:$USER /home/dvishal485/TeamPortal/nix-backend
-          chmod -R 755 /home/dvishal485/TeamPortal/nix-backend
 
       # Copy source code to NEW target dir with permission fixes
       - name: Copy source code to target dir
-        run: rsync -avz --no-group --chmod=D755,F644 $GITHUB_WORKSPACE/ /home/dvishal485/TeamPortal/nix-backend/
+        run: |
+          mkdir -p /home/dvishal485/TeamPortal/nix-backend
+          rsync -avz --no-group --no-owner --chmod=D755,F644 $GITHUB_WORKSPACE/ /home/dvishal485/TeamPortal/nix-backend/
 
       - name: Get to target dir
         run: cd /home/dvishal485/TeamPortal/nix-backend
