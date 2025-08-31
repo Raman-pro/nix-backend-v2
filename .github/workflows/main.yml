@@ -28,5 +28,5 @@ jobs:
       # restart the application.
       - name: 4. Restart Application with PM2
         working-directory: /home/dvishal485/TeamPortal/nix-backend
-        run: /root/.local/share/devbox/global/default/.devbox/nix/profile/default/bin/pm2 restart nix-shell-env
+        run: sudo /root/.local/share/devbox/global/default/.devbox/nix/profile/default/bin/pm2 restart nix-shell-env
 
