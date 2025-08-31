@@ -81,3 +81,19 @@ export const createNewUser = async (name: string, email: string) => {
 
   return user;
 };
+
+export const createNewUsers = async (users: Array<any>) => {
+  const hashedUsers = await Promise.all(
+    users.map(async (user) => {
+      const password: string = generateRandomPassword(7);
+      return {
+        ...user,
+        password: await bcrypt.hash(password, 10),
+      }
+    }),
+  );
+
+  const userDocsInserted = await User.insertMany(hashedUsers);
+  return userDocsInserted;
+
+}

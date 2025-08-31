@@ -261,6 +261,40 @@ export const login = asyncErrorHandler(async (req, res, next) => {
   }
 });
 
+
+/**
+ * @description Adds user list to users database.
+ * @route POST /post-add-users
+ * @param req - The HTTP request object.
+ * @param res - The HTTP response object.
+ * @param next - The next middleware function in the stack.
+ * @returns A JSON response containing the user database.
+ * @returns status - Indicates the success status of the operation ('success').
+ * @returns message - Describes the outcome of the operation ('User Data successfully inserted').
+ * @returns data - Contains the data added to the users database.
+ * @howItWorks
+ * - Retrieves the array of users from `req.params.users`.
+ * - Hashes all the password being added.
+ * - adds all the data to users models
+ */
+
+export const postBulkUserController = asyncErrorHandler(
+  async (req, res, next) => {
+    const usersData = req.body.users;
+
+    if (!Array.isArray(usersData)) {
+      return res.status(400).json({ error: "user data must be an array" });
+    }
+
+    const userDocsInserted = await UserService.createNewUsers(usersData);
+
+    res.status(StatusCode.OK).json({
+      message: "User Data successfully inserted",
+      data: userDocsInserted,
+    });
+  },
+);
+
 /**
  * Handle user password reset request. Send a mail to user with password reset link.
  */
