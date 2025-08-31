@@ -1,32 +1,52 @@
-name: Deploy Backend to Server
+name: Deploy
 
+# Controls when the workflow will run
 on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches: [ "main" ]
+  
+  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  deploy: 
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
     runs-on: home-server
 
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # latest code from your repository
-      - name: 1. Checkout Repository Code
-        uses: actions/checkout@v4
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
         with:
           submodules: true
 
-      # the new code to the live application directory.
-      - name: 2. Sync Files to Live Directory
-        run: rsync -avz $GITHUB_WORKSPACE/ /home/dvishal485/TeamPortal/nix-backend/
+      - name: Get to work dir
+        run: cd $GITHUB_WORKSPACE
 
-      # install dependencies.
-      - name: 3. Install NPM Dependencies
-        working-directory: /home/dvishal485/TeamPortal/nix-backend
-        run: npm install
+      # Fix permissions for the target directory before rsync
+      - name: Ensure target directory exists with correct permissions
+        run: |
+          mkdir -p /home/dvishal485/TeamPortal/nix-backend
+          sudo chown -R $USER:$USER /home/dvishal485/TeamPortal/nix-backend
+          chmod -R 755 /home/dvishal485/TeamPortal/nix-backend
 
-      # restart the application.
-      - name: 4. Restart Application with PM2
-        working-directory: /home/dvishal485/TeamPortal/nix-backend
-        run: sudo /root/.local/share/devbox/global/default/.devbox/nix/profile/default/bin/pm2 restart nix-shell-env
+      # Copy source code to NEW target dir with permission fixes
+      - name: Copy source code to target dir
+        run: rsync -avz --no-group --chmod=D755,F644 $GITHUB_WORKSPACE/ /home/dvishal485/TeamPortal/nix-backend/
 
+      - name: Get to target dir
+        run: cd /home/dvishal485/TeamPortal/nix-backend
+
+      - name: Install dependencies
+        run: |
+          cd /home/dvishal485/TeamPortal/nix-backend
+          npm i
+
+      # Updated PM2 restart command with correct process name
+      - name: Deploy to web
+        run: |
+          cd /home/dvishal485/TeamPortal/nix-backend
+          pm2 restart nix-shell-env
