@@ -6,7 +6,7 @@ import {
   forgotPassword,
   resetPassword,
   logout,
-  postBulkUserController
+  postBulkUserController,
 } from "../controllers/authController";
 import protected_route from "../middlewares/permsMiddlewareInit";
 import Permission from "@static/types/permissions";

@@ -65,7 +65,11 @@ export const getAllUsers = async (
   return allUsers;
 };
 
-export const createNewUser = async (name: string, email: string) => {
+export const createNewUser = async (
+  name: string,
+  email: string,
+  role_id: string,
+) => {
   const password: string = generateRandomPassword(7);
   const hashed_password: string = await bcrypt.hash(password, 10);
 
@@ -73,6 +77,7 @@ export const createNewUser = async (name: string, email: string) => {
     name: name,
     email: email,
     password: hashed_password,
+    role_id: role_id,
   });
 
   const reg_mail = new RegisterationMail(user, password);
@@ -82,18 +87,17 @@ export const createNewUser = async (name: string, email: string) => {
   return user;
 };
 
-export const createNewUsers = async (users: Array<any>) => {
+export const createNewUsers = async (users: Array<IUser>) => {
   const hashedUsers = await Promise.all(
     users.map(async (user) => {
       const password: string = generateRandomPassword(7);
       return {
         ...user,
         password: await bcrypt.hash(password, 10),
-      }
+      };
     }),
   );
 
   const userDocsInserted = await User.insertMany(hashedUsers);
   return userDocsInserted;
-
-}
+};

@@ -142,7 +142,7 @@ export const refresh = asyncErrorHandler(async (req, res, next) => {
  */
 
 export const signup = asyncErrorHandler(async (req, res, next) => {
-  const { name, username: email } = req.body;
+  const { name, username: email, teamRole: role_id } = req.body;
 
   if (!email || !name) {
     const error = new CustomError(
@@ -153,7 +153,6 @@ export const signup = asyncErrorHandler(async (req, res, next) => {
   }
 
   const isDuplicate = await UserService.checkUserExists({ email: email });
-  console.log(isDuplicate);
 
   if (isDuplicate) {
     const error = new CustomError(
@@ -163,7 +162,7 @@ export const signup = asyncErrorHandler(async (req, res, next) => {
     return next(error);
   }
 
-  await UserService.createNewUser(name, email);
+  await UserService.createNewUser(name, email, role_id);
 
   res.status(StatusCode.CREATED).json({
     status: "success",
@@ -171,6 +170,7 @@ export const signup = asyncErrorHandler(async (req, res, next) => {
     data: {
       name,
       email,
+      role_id,
     },
   });
 });
@@ -260,7 +260,6 @@ export const login = asyncErrorHandler(async (req, res, next) => {
     return next(error);
   }
 });
-
 
 /**
  * @description Adds user list to users database.

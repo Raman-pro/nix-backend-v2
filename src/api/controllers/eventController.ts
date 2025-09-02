@@ -3,17 +3,15 @@ import asyncErrorHandler from "../helpers/asyncErrorHandler";
 import StatusCode from "@static/types/backend/httpStatusCode";
 import { Event, IEvent } from "../models/eventModel";
 
-export const getEventsController = asyncErrorHandler(
-  async (req, res, next) => {
-    const events = await Event.find().sort();
+export const getEventsController = asyncErrorHandler(async (req, res, next) => {
+  const events = await Event.find().sort();
 
-    res.status(StatusCode.OK).json({
-      status: "success",
-      message: "Events fetched successfully",
-      data: events,
-    });
-  },
-);
+  res.status(StatusCode.OK).json({
+    status: "success",
+    message: "Events fetched successfully",
+    data: events,
+  });
+});
 
 export const createEventController = asyncErrorHandler(
   async (req, res, next) => {
