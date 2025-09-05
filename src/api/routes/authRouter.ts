@@ -19,7 +19,7 @@ const signup_protect = protected_route([Permission.CreateProfile]);
 router.route("/signup").post(protect, signup_protect, signup);
 router.post("/login", login);
 router
-  .route("/post-add-users")
+  .route("/add-members")
   .post(protect, signup_protect, postBulkUserController);
 router.get("/refresh", refresh);
 router.post("/logout", logout);

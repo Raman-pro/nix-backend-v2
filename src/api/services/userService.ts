@@ -88,16 +88,18 @@ export const createNewUser = async (
 };
 
 export const createNewUsers = async (users: Array<IUser>) => {
-  const hashedUsers = await Promise.all(
-    users.map(async (user) => {
-      const password: string = generateRandomPassword(7);
-      return {
-        ...user,
-        password: await bcrypt.hash(password, 10),
-      };
-    }),
-  );
-
-  const userDocsInserted = await User.insertMany(hashedUsers);
-  return userDocsInserted;
+  
+  const createdUsers: HydratedDocument<IUser>[] = [];
+  for (const user of users) {
+    const password: string = generateRandomPassword(7);
+    const hashed_password: string = await bcrypt.hash(password, 10);
+    const newUser = await User.create({
+      ...user,
+      password: hashed_password,
+    });
+    const reg_mail = new RegisterationMail(newUser, password);
+    await reg_mail.sendTo(newUser.email);
+    createdUsers.push(newUser);
+  }
+  return createdUsers;
 };
