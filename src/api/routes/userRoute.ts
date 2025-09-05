@@ -12,7 +12,6 @@ import {
 import { protect } from "../middlewares/authMiddleware";
 import protected_route from "../middlewares/permsMiddlewareInit";
 import Permission from "@static/types/permissions";
-import { create } from "domain";
 
 const router = express.Router();
 

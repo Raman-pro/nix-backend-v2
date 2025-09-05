@@ -263,7 +263,7 @@ export const login = asyncErrorHandler(async (req, res, next) => {
 
 /**
  * @description Adds user list to users database.
- * @route POST /post-add-users
+ * @route POST /add-members
  * @param req - The HTTP request object.
  * @param res - The HTTP response object.
  * @param next - The next middleware function in the stack.
@@ -273,6 +273,7 @@ export const login = asyncErrorHandler(async (req, res, next) => {
  * @returns data - Contains the data added to the users database.
  * @howItWorks
  * - Retrieves the array of users from `req.params.users`.
+ * - Checks for any duplicate email and returns the list of duplicate email found
  * - Hashes all the password being added.
  * - adds all the data to users models
  */
@@ -280,16 +281,29 @@ export const login = asyncErrorHandler(async (req, res, next) => {
 export const postBulkUserController = asyncErrorHandler(
   async (req, res, next) => {
     const usersData = req.body.users;
-
     if (!Array.isArray(usersData)) {
-      return res.status(400).json({ error: "user data must be an array" });
+      return res.status(400).json({ error: "User data must be an array" });
     }
 
-    const userDocsInserted = await UserService.createNewUsers(usersData);
+    const { createdUsers, existingUsers } =
+      await UserService.createNewUsers(usersData);
+
+    if (existingUsers.length > 0) {
+      return res.status(StatusCode.CONFLICT).json({
+        message:
+          createdUsers.length > 0
+            ? "Some users already exists"
+            : "No new user created all were duplicate",
+        data: {
+          createdUsers: createdUsers,
+          existingUsers: existingUsers,
+        },
+      });
+    }
 
     res.status(StatusCode.OK).json({
-      message: "User Data successfully inserted",
-      data: userDocsInserted,
+      message: "User Data inserted successfully",
+      data: createdUsers,
     });
   },
 );
