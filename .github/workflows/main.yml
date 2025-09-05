@@ -36,7 +36,7 @@ jobs:
       - name: Copy source code to target dir
         run: |
           mkdir -p /home/dvishal485/TeamPortal/nix-backend
-          rsync -avz --no-group --no-owner --chmod=D755,F644 $GITHUB_WORKSPACE/ /home/dvishal485/TeamPortal/nix-backend/
+          rsync -avz --no-group --no-owner --chmod=D755,F644 --exclude 'uploads/' $GITHUB_WORKSPACE/ /home/dvishal485/TeamPortal/nix-backend/
 
       - name: Get to target dir
         run: cd /home/dvishal485/TeamPortal/nix-backend
