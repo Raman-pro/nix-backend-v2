@@ -88,16 +88,26 @@ export const createNewUser = async (
 };
 
 export const createNewUsers = async (users: Array<IUser>) => {
-  const hashedUsers = await Promise.all(
-    users.map(async (user) => {
-      const password: string = generateRandomPassword(7);
-      return {
-        ...user,
-        password: await bcrypt.hash(password, 10),
-      };
-    }),
-  );
+  const createdUsers: HydratedDocument<IUser>[] = [];
+  const incomingEmails = users.map((user) => user.email);
+  const existingUsers = await User.find({ email: { $in: incomingEmails } });
+  const existingEmails = existingUsers.map((user) => user.email);
 
-  const userDocsInserted = await User.insertMany(hashedUsers);
-  return userDocsInserted;
+  console.log(existingEmails);
+
+  for (const user of users) {
+    if (existingEmails.includes(user.email)) {
+      continue;
+    }
+    const password: string = generateRandomPassword(7);
+    const hashed_password: string = await bcrypt.hash(password, 10);
+    const newUser = await User.create({
+      ...user,
+      password: hashed_password,
+    });
+    const reg_mail = new RegisterationMail(newUser, password);
+    await reg_mail.sendTo(newUser.email);
+    createdUsers.push(newUser);
+  }
+  return { createdUsers, existingUsers };
 };

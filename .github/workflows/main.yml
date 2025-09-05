@@ -1,5 +1,4 @@
 # This is a basic workflow to help you get started with Actions
-
 name: Deploy on push
 
 # Controls when the workflow will run
@@ -28,14 +27,27 @@ jobs:
       - name: Get to work dir
         run: cd $GITHUB_WORKSPACE
 
+      # Ensure target directory exists (ownership already fixed)
+      - name: Ensure target directory exists
+        run: |
+          mkdir -p /home/dvishal485/TeamPortal/nix-backend
+
+      # Copy source code to NEW target dir with permission fixes
       - name: Copy source code to target dir
-        run: rsync -avz $GITHUB_WORKSPACE/ ~/dtutimes-backend/
+        run: |
+          mkdir -p /home/dvishal485/TeamPortal/nix-backend
+          rsync -avz --no-group --no-owner --chmod=D755,F644 --exclude 'uploads/' $GITHUB_WORKSPACE/ /home/dvishal485/TeamPortal/nix-backend/
 
       - name: Get to target dir
-        run: cd ~/dtutimes-backend
+        run: cd /home/dvishal485/TeamPortal/nix-backend
 
       - name: Install dependencies
-        run: npm i
+        run: |
+          cd /home/dvishal485/TeamPortal/nix-backend
+          npm i
 
+      # Updated PM2 restart command with correct process name
       - name: Deploy to web
-        run: pm2 restart NixBackend
+        run: |
+          cd /home/dvishal485/TeamPortal/nix-backend
+          pm2 restart nix-shell-env
