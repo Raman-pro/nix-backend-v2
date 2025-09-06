@@ -292,11 +292,11 @@ export const postBulkUserController = asyncErrorHandler(
       return res.status(StatusCode.CONFLICT).json({
         message:
           createdUsers.length > 0
-            ? "Some users already exists"
-            : "No new user created all were duplicate",
+        ? "Some users were added, but some already exist."
+        : "All provided users already exist.",
         data: {
-          createdUsers: createdUsers,
-          existingUsers: existingUsers,
+          createdUsers,
+          existingUsers,
         },
       });
     }
