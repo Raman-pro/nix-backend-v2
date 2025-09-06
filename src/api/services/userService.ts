@@ -65,7 +65,11 @@ export const getAllUsers = async (
   return allUsers;
 };
 
-export const createNewUser = async (name: string, email: string) => {
+export const createNewUser = async (
+  name: string,
+  email: string,
+  role_id: string,
+) => {
   const password: string = generateRandomPassword(7);
   const hashed_password: string = await bcrypt.hash(password, 10);
 
@@ -73,6 +77,7 @@ export const createNewUser = async (name: string, email: string) => {
     name: name,
     email: email,
     password: hashed_password,
+    role_id: role_id,
   });
 
   const reg_mail = new RegisterationMail(user, password);
@@ -80,4 +85,29 @@ export const createNewUser = async (name: string, email: string) => {
   if (!reg_mail) return null;
 
   return user;
+};
+
+export const createNewUsers = async (users: Array<IUser>) => {
+  const createdUsers: HydratedDocument<IUser>[] = [];
+  const incomingEmails = users.map((user) => user.email);
+  const existingUsers = await User.find({ email: { $in: incomingEmails } });
+  const existingEmails = existingUsers.map((user) => user.email);
+
+  console.log(existingEmails);
+
+  for (const user of users) {
+    if (existingEmails.includes(user.email)) {
+      continue;
+    }
+    const password: string = generateRandomPassword(7);
+    const hashed_password: string = await bcrypt.hash(password, 10);
+    const newUser = await User.create({
+      ...user,
+      password: hashed_password,
+    });
+    const reg_mail = new RegisterationMail(newUser, password);
+    await reg_mail.sendTo(newUser.email);
+    createdUsers.push(newUser);
+  }
+  return { createdUsers, existingUsers };
 };

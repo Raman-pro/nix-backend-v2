@@ -1,35 +1,23 @@
 {
-    "compilerOptions": {
-        "module": "NodeNext",
-        "moduleResolution": "nodenext",
-        "target": "ESNext",
-        "sourceMap": false,
-        "outDir": "dist",
-        "allowJs": false,
-        "strictNullChecks": true,
-        "typeRoots": [
-            "./src/types",
-            "./node_modules/@types"
-        ],
-        "baseUrl": ".",
-        "paths": { // Adjust based on your project structure
-            "@/*": [
-                "./src/*"
-            ],
-            "@static/*": [
-                "./src/commonlib/*"
-            ]
-        },
-        "resolveJsonModule": true
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
+    "target": "ESNext",
+    "sourceMap": false,
+    "outDir": "dist",
+    "allowJs": false,
+    "strictNullChecks": true,
+    "typeRoots": ["./src/types", "./node_modules/@types"],
+    "baseUrl": ".",
+    "paths": {
+      // Adjust based on your project structure
+      "@/*": ["./src/*"],
+      "@static/*": ["./src/commonlib/*"]
     },
-    "ts-node": {
-        "require": [
-            "tsconfig-paths/register"
-        ]
-    },
-    "exclude": [
-        "node_modules",
-        "dist",
-        "src/scripts"
-    ],
+    "resolveJsonModule": true
+  },
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  },
+  "exclude": ["node_modules", "dist", "src/scripts"]
 }

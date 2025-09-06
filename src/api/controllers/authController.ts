@@ -142,7 +142,7 @@ export const refresh = asyncErrorHandler(async (req, res, next) => {
  */
 
 export const signup = asyncErrorHandler(async (req, res, next) => {
-  const { name, username: email } = req.body;
+  const { name, username: email, teamRole: role_id } = req.body;
 
   if (!email || !name) {
     const error = new CustomError(
@@ -153,7 +153,6 @@ export const signup = asyncErrorHandler(async (req, res, next) => {
   }
 
   const isDuplicate = await UserService.checkUserExists({ email: email });
-  console.log(isDuplicate);
 
   if (isDuplicate) {
     const error = new CustomError(
@@ -163,7 +162,7 @@ export const signup = asyncErrorHandler(async (req, res, next) => {
     return next(error);
   }
 
-  await UserService.createNewUser(name, email);
+  await UserService.createNewUser(name, email, role_id);
 
   res.status(StatusCode.CREATED).json({
     status: "success",
@@ -171,6 +170,7 @@ export const signup = asyncErrorHandler(async (req, res, next) => {
     data: {
       name,
       email,
+      role_id,
     },
   });
 });
@@ -260,6 +260,53 @@ export const login = asyncErrorHandler(async (req, res, next) => {
     return next(error);
   }
 });
+
+/**
+ * @description Adds user list to users database.
+ * @route POST /add-members
+ * @param req - The HTTP request object.
+ * @param res - The HTTP response object.
+ * @param next - The next middleware function in the stack.
+ * @returns A JSON response containing the user database.
+ * @returns status - Indicates the success status of the operation ('success').
+ * @returns message - Describes the outcome of the operation ('User Data successfully inserted').
+ * @returns data - Contains the data added to the users database.
+ * @howItWorks
+ * - Retrieves the array of users from `req.params.users`.
+ * - Checks for any duplicate email and returns the list of duplicate email found
+ * - Hashes all the password being added.
+ * - adds all the data to users models
+ */
+
+export const postBulkUserController = asyncErrorHandler(
+  async (req, res, next) => {
+    const usersData = req.body.users;
+    if (!Array.isArray(usersData)) {
+      return res.status(400).json({ error: "User data must be an array" });
+    }
+
+    const { createdUsers, existingUsers } =
+      await UserService.createNewUsers(usersData);
+
+    if (existingUsers.length > 0) {
+      return res.status(StatusCode.CONFLICT).json({
+        message:
+          createdUsers.length > 0
+        ? "Some users were added, but some already exist."
+        : "All provided users already exist.",
+        data: {
+          createdUsers,
+          existingUsers,
+        },
+      });
+    }
+
+    res.status(StatusCode.OK).json({
+      message: "User Data inserted successfully",
+      data: createdUsers,
+    });
+  },
+);
 
 /**
  * Handle user password reset request. Send a mail to user with password reset link.

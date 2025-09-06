@@ -6,6 +6,7 @@ import {
   forgotPassword,
   resetPassword,
   logout,
+  postBulkUserController,
 } from "../controllers/authController";
 import protected_route from "../middlewares/permsMiddlewareInit";
 import Permission from "@static/types/permissions";
@@ -17,6 +18,9 @@ const signup_protect = protected_route([Permission.CreateProfile]);
 
 router.route("/signup").post(protect, signup_protect, signup);
 router.post("/login", login);
+router
+  .route("/add-members")
+  .post(protect, signup_protect, postBulkUserController);
 router.get("/refresh", refresh);
 router.post("/logout", logout);
 router.post("/forgotPassword", forgotPassword);
