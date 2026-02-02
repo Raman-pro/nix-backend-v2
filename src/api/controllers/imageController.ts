@@ -153,7 +153,6 @@ export const upload_image = asyncErrorHandler(async (req, res, next) => {
   const req_file = req.file;
   const is_thumbnail = req.query.thumbnail === "true";
   const image_type = (req.body.image_type as ImageType) || ImageType.General;
-  console.log("image type is", req.body.image_type);
   if (!req_file) {
     const err = new CustomError(
       "Please upload an image and with a proper extension",
@@ -270,7 +269,6 @@ export const get_image = asyncErrorHandler(async (req, res, next) => {
       console.error("Could not parse image type from query please send valid integer");
     }
     // not empty string and not undefined
-    console.log("image type is",);
     const img_buff = await get_thumbnail({
       og_filename: filename,
       image_type: image_type || ImageType.General,
